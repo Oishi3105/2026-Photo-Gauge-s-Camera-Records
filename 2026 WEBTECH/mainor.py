@@ -4,9 +4,9 @@ from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
 
-DB_FILE = "cameralite3.db"
-UPLOAD_FOLDER = "static/uploads"
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_FILE = os.path.join(BASE_DIR, "cameralite3.db")
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "uploads")
 
 app = Flask(__name__)
 app.secret_key = "camera_secret_key"
@@ -228,3 +228,4 @@ def logout():
 if __name__ == "__main__":
 
     app.run(debug=True)
+
