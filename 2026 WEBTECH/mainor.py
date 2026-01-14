@@ -41,9 +41,19 @@ def initialize_database():
     conn.commit()
     conn.close()
 
+def migrate_database():
+    conn = create_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("ALTER TABLE cameras ADD COLUMN photo TEXT DEFAULT NULL")
+        print("Column 'photo' added successfully!")
+    except sqlite3.OperationalError:
+        print("Column already exists.")
+    conn.commit()
+    conn.close()
 
 initialize_database()
-
+migrate_database()
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -216,4 +226,5 @@ def logout():
 
 # RUNNING IN THE 90s
 if __name__ == "__main__":
+
     app.run(debug=True)
